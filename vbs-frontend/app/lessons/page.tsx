@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import PageContainer from "@/components/layout/PageContainer";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import PageHeader from "@/components/shared/PageHeader";
 import LoadingState from "@/components/shared/LoadingState";
 import ErrorState from "@/components/shared/ErrorState";
@@ -39,6 +40,7 @@ export default function LessonsPage() {
   }, []);
 
   return (
+    <ProtectedRoute>
     <PageContainer>
       <PageHeader
         title="Lessons"
@@ -106,5 +108,6 @@ export default function LessonsPage() {
         </Box>
       )}
     </PageContainer>
+    </ProtectedRoute>
   );
 }

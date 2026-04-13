@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import PageContainer from "@/components/layout/PageContainer";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import PageHeader from "@/components/shared/PageHeader";
 import LoadingState from "@/components/shared/LoadingState";
 import ErrorState from "@/components/shared/ErrorState";
@@ -40,72 +41,74 @@ export default function ActivitiesPage() {
   }, []);
 
   return (
-    <PageContainer>
-      <PageHeader
-        title="Activities"
-        subtitle="Games, crafts, songs, and other scheduled activities."
-      />
+    <ProtectedRoute>
+      <PageContainer>
+        <PageHeader
+          title="Activities"
+          subtitle="Games, crafts, songs, and other scheduled activities."
+        />
 
-      {loading ? (
-        <LoadingState />
-      ) : error ? (
-        <ErrorState message={error} />
-      ) : data.length === 0 ? (
-        <Paper sx={{ p: 2 }}>
-          <EmptyState message="No activities created. Scheduled activities will show here once added." />
-        </Paper>
-      ) : (
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: "repeat(2, 1fr)",
-              lg: "repeat(3, 1fr)",
-            },
-            gap: 3,
-          }}
-        >
-          {data.map((activity) => (
-            <Paper
-              key={activity.id}
-              sx={{
-                p: 3,
-                height: "100%",
-              }}
-            >
-              <Typography variant="h6" gutterBottom>
-                {activity.name}
-              </Typography>
-
-              <Typography variant="body2" color="text.secondary">
-                {activity.day}
-              </Typography>
-
-              <Box sx={{ mt: 2 }}>
-                <Typography variant="body2">
-                  <strong>Time:</strong> {activity.start_time} -{" "}
-                  {activity.end_time}
+        {loading ? (
+          <LoadingState />
+        ) : error ? (
+          <ErrorState message={error} />
+        ) : data.length === 0 ? (
+          <Paper sx={{ p: 2 }}>
+            <EmptyState message="No activities created. Scheduled activities will show here once added." />
+          </Paper>
+        ) : (
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "repeat(2, 1fr)",
+                lg: "repeat(3, 1fr)",
+              },
+              gap: 3,
+            }}
+          >
+            {data.map((activity) => (
+              <Paper
+                key={activity.id}
+                sx={{
+                  p: 3,
+                  height: "100%",
+                }}
+              >
+                <Typography variant="h6" gutterBottom>
+                  {activity.name}
                 </Typography>
 
-                {activity.location && (
-                  <Typography variant="body2" sx={{ mt: 1 }}>
-                    <strong>Location:</strong> {activity.location}
-                  </Typography>
-                )}
-              </Box>
+                <Typography variant="body2" color="text.secondary">
+                  {activity.day}
+                </Typography>
 
-              {activity.description && (
                 <Box sx={{ mt: 2 }}>
                   <Typography variant="body2">
-                    {activity.description}
+                    <strong>Time:</strong> {activity.start_time} -{" "}
+                    {activity.end_time}
                   </Typography>
+
+                  {activity.location && (
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                      <strong>Location:</strong> {activity.location}
+                    </Typography>
+                  )}
                 </Box>
-              )}
-            </Paper>
-          ))}
-        </Box>
-      )}
-    </PageContainer>
+
+                {activity.description && (
+                  <Box sx={{ mt: 2 }}>
+                    <Typography variant="body2">
+                      {activity.description}
+                    </Typography>
+                  </Box>
+                )}
+              </Paper>
+            ))}
+          </Box>
+        )}
+      </PageContainer>
+    </ProtectedRoute>
   );
 }

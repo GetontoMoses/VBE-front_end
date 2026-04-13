@@ -7,7 +7,7 @@ import api from "@/lib/api";
 interface AuthContextType {
   isLoggedIn: boolean;
   loading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -23,9 +23,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(false);
   }, []);
 
-  const login = async (username: string, password: string) => {
-    const response = await api.post("/token/", { username, password });
-    saveTokens(response.data.access, response.data.refresh);
+  const login = async (email: string, password: string) => {
+    const response = await api.post("/accounts/login/", { email, password });
+
+    console.log("LOGIN RESPONSE:", response.data);
+
+    const { access, refresh } = response.data;
+
+    if (!access || !refresh) {
+      throw new Error("Access or refresh token missing from response.");
+    }
+
+    saveTokens(access, refresh);
     setIsLoggedIn(true);
   };
 

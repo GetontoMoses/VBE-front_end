@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Box, Paper } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import PageContainer from "@/components/layout/PageContainer";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import PageHeader from "@/components/shared/PageHeader";
 import LoadingState from "@/components/shared/LoadingState";
 import ErrorState from "@/components/shared/ErrorState";
@@ -49,6 +50,7 @@ export default function RegistrationsPage() {
   }, []);
 
   return (
+    <ProtectedRoute>
     <PageContainer>
       <PageHeader
         title="Registrations"
@@ -77,5 +79,6 @@ export default function RegistrationsPage() {
         )}
       </Paper>
     </PageContainer>
+    </ProtectedRoute>
   );
 }

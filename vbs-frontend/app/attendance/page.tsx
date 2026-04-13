@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Box, Chip, Paper } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import PageContainer from "@/components/layout/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import LoadingState from "@/components/shared/LoadingState";
@@ -54,6 +55,7 @@ export default function AttendancePage() {
   }, []);
 
   return (
+  <ProtectedRoute>
     <PageContainer>
       <PageHeader
         title="Attendance"
@@ -82,5 +84,6 @@ export default function AttendancePage() {
         )}
       </Paper>
     </PageContainer>
+  </ProtectedRoute>
   );
 }

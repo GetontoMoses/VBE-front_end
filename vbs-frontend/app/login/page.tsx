@@ -16,7 +16,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -27,10 +27,10 @@ export default function LoginPage() {
     setSubmitting(true);
 
     try {
-      await login(username, password);
+      await login(email, password);
       router.push("/");
     } catch {
-      setError("Invalid username or password.");
+      setError("Invalid email or password.");
     } finally {
       setSubmitting(false);
     }
@@ -72,10 +72,11 @@ export default function LoginPage() {
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            label="Username"
+            label="Email"
+            type="email"
             margin="normal"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <TextField
