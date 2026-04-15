@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
 import {
   Box,
+  Button,
   Drawer,
   List,
   ListItemButton,
@@ -20,6 +23,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import CelebrationIcon from "@mui/icons-material/Celebration";
+
 
 const drawerWidth = 240;
 
@@ -40,7 +44,13 @@ const menuItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { logout } = useAuth();
 
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
   return (
     <Drawer
       variant="permanent"
@@ -57,10 +67,7 @@ export default function Sidebar() {
       <Toolbar>
         <Box>
           <Typography variant="h6" sx={{ fontWeight: 800 }}>
-            VBS Admin
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Management System
+            Siloam VBS Admin
           </Typography>
         </Box>
       </Toolbar>
@@ -83,6 +90,9 @@ export default function Sidebar() {
           </ListItemButton>
         ))}
       </List>
+      <Button variant="outlined" size="small" onClick={handleLogout}>
+        Logout
+      </Button>
     </Drawer>
   );
 }

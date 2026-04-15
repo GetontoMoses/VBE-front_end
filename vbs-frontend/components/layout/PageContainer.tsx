@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Sidebar from "@/components/layout/Sidebar";
-import AppNavbar from "@/components/layout/AppNavbar";
+
 
 export default function PageContainer({
   children,
@@ -24,7 +24,7 @@ export default function PageContainer({
           minWidth: 0,
         }}
       >
-        <AppNavbar />
+   
         <Box
           sx={{
             p: { xs: 2, md: 4 },
